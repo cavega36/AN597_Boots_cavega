@@ -1,0 +1,52 @@
+"0",""
+"0","# get 95% confidence intervals"
+"0","boot.ci(results, type=""bca"", index=1) # intercept"
+"1","BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+"
+"1","Based on 1000 bootstrap replicates
+
+"
+"1","CALL : 
+"
+"1","boot.ci(boot.out = results, type = ""bca"", index = 1)
+"
+"1","
+Intervals : "
+"1","
+Level"
+"1"," "
+"1","      BCa          "
+"1","
+95%  "
+"1"," "
+"1","(-10.585,"
+"1"," "
+"1"," -8.323 )  "
+"1","
+Calculations and Intervals on Original Scale
+"
+"0","boot.ci(results, type=""bca"", index=2) # wt"
+"1","BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+"
+"1","Based on 1000 bootstrap replicates
+
+"
+"1","CALL : 
+"
+"1","boot.ci(boot.out = results, type = ""bca"", index = 2)
+"
+"1","
+Intervals : "
+"1","
+Level"
+"1"," "
+"1","      BCa          "
+"1","
+95%  "
+"1"," "
+"1","( 0.892,"
+"1"," "
+"1"," 1.185 )  "
+"1","
+Calculations and Intervals on Original Scale
+"

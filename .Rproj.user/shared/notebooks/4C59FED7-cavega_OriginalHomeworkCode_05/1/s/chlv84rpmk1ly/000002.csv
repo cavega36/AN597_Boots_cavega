@@ -1,0 +1,6 @@
+"0","library(""ggplot2"")"
+"0","library(car)"
+"0","d$logHomeRange <- log(d$HomeRange_km2)"
+"0","d$logFemaleMass <- log(d$Body_mass_female_mean)"
+"0",""
+"0","plot(data=d, d$logHomeRange~d$logFemaleMass) #quick plot to look at relationship"

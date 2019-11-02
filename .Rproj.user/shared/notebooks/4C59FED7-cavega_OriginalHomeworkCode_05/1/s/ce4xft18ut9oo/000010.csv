@@ -1,0 +1,44 @@
+"0","library(boot)
+
+bs <- function(formula, data, indices) {
+    d <- data[indices,]
+    fit <- lm(d$logHomeRange~d$logFemaleMass, data=d)
+    return(coef(fit))
+}
+
+results <- boot(data=d, statistic=bs, R=1000, formula=d$logHomeRange~d$logFemaleMass)
+
+results
+"
+"1","
+ORDINARY NONPARAMETRIC BOOTSTRAP
+
+"
+"1","
+Call:
+"
+"1","boot(data = d, statistic = bs, R = 1000, formula = d$logHomeRange ~ 
+"
+"1","    d$logFemaleMass)
+"
+"1","
+
+Bootstrap Statistics :
+"
+"1","   "
+"1","  original"
+"1","      bias  "
+"1","  std. error"
+"1","
+t1*"
+"1"," -9.441231"
+"1"," -0.01222173"
+"1","  0.59160918"
+"1","
+t2*"
+"1","  1.036432"
+"1","  0.00127201"
+"1","  0.07583674"
+"1","
+"
+"0","plot(results, index=1) # intercept"

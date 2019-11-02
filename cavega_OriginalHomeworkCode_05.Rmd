@@ -1,0 +1,84 @@
+---
+title: "cavega_OriginalHomeworkCode_05"
+author: "C. Vega"
+date: "10/31/2019"
+output: html_document
+---
+# This is code for Homework 05: Bootstrapping Standard Errors and CIs for Linear Models
+## Five Challenges
+  1. I had trouble interpreting the results from the linear model. It is unclear to me what exaclty each of the results means so it took longer to really compare it to the second part of the homework.
+  2. It was difficult to find a good example of bootstrapping. I tried a bunch of different ways from the modules, but none seemed to help. I finally settled on using the boot function which seemed to work.
+  3. I found the shell of the function I created online and it seemed to do what I wanted. However, I could not find a way to access the 1000 bootstrapped coefficients.
+  4. Once I got the confidence intervals from bootstrapping I wasn't sure if there was much else to do. 
+  5. I feel like I have missed a step of the homework. If any, can you tell me what you may have done that I have not?
+  
+## Loading in the Dataset "Kamilar and Cooper"
+```{r}
+library(curl)
+f <- curl("https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN597_Fall19/KamilarAndCooperData.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+```
+
+## Create a Linear Regression for Log Home Range and Log Female Body Mass
+## Linear equation: y=1.04x-9.44
+```{r}
+library("ggplot2")
+library(car)
+d$logHomeRange <- log(d$HomeRange_km2)
+d$logFemaleMass <- log(d$Body_mass_female_mean)
+
+plot(data=d, d$logHomeRange~d$logFemaleMass) #quick plot to look at relationship
+
+LogModel <- lm(d$logHomeRange~d$logFemaleMass, data=d)
+LogModel #model to use with the graph
+
+summary(LogModel)
+names(LogModel)
+
+plot(LogModel)
+# Plotting residuals
+qqPlot(LogModel$residuals)
+
+# Perform Shapiro test to show normality
+s <- shapiro.test(LogModel$residuals)
+s
+
+```
+
+# Writing a function to perform bootstrap
+``` {r}
+library(boot)
+
+bs <- function(formula, data, indices) {
+    d <- data[indices,]
+    fit <- lm(d$logHomeRange~d$logFemaleMass, data=d)
+    return(coef(fit))
+}
+
+results <- boot(data=d, statistic=bs, R=1000, formula=d$logHomeRange~d$logFemaleMass)
+
+results
+
+plot(results, index=1) # intercept
+plot(results, index=2) # wt
+
+# get 95% confidence intervals
+boot.ci(results, type="bca", index=1) # intercept
+boot.ci(results, type="bca", index=2) # wt
+
+
+```
+# End of Homework Question:
+> **Estimate the standard error for each of your β coefficients as the standard deviation of the sampling distribution from your bootstrap and determine the 95% CI for each of your β coefficients based on the appropriate quantiles from your sampling distribution.**
+    I am unsure of how to do this, but I think I have calculated the data needed in order to get the answer.
+    
+    
+> **How does the former compare to the SE estimated from your entire dataset using the formula for standard error implemented in lm()?**
+    The standard error between the two only differ slightly. 
+    
+    
+> **How does the latter compare to the 95% CI estimated from your entire dataset?**
+    I don't think I calculate a confidence interval for my entire dataset. If I have, where in the results would I find them?
+
+

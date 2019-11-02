@@ -1,0 +1,4 @@
+"0","qqplot(LogModel$residuals)
+"
+"2","Error in sort(y) : argument ""y"" is missing, with no default
+"
